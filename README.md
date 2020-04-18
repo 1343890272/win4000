@@ -8,4 +8,4 @@
 #
 ![image](https://github.com/1343890272/win4000/blob/master/2.jpg)
 #
-![image](https://github.com/1343890272/win4000/blob/master/3.jpg)
+![image](https://github.com/1343890272/win4000/blob/master/1.gif)
