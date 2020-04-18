@@ -79,7 +79,7 @@ def detail(args):
         k = {'title': title_zt, 'href': href_zt, 'next': {'title': title_detail, 'href': href_detail,
                                                           'next': {'title': img_title, 'href': img_url}}}
         if k not in l_i:
-            l_i.append(img_url)
+            l_i.append(k)
         sys.stdout.write(
             f'\r分类队列:{str(len(l_zt))},分类:{str(len(l_zt_o))},壁纸集:{len(l_d_o)},图片:{len(l_i)}')
         sys.stdout.flush()
