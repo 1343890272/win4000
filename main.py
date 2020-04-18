@@ -81,7 +81,7 @@ def detail(args):
         if k not in l_i:
             l_i.append(img_url)
         sys.stdout.write(
-            f'\r当前分类队列:{str(len(l_zt))},正在爬取的分类:{str(len(l_zt_o))},正在爬取的壁纸集:{len(l_d)},已爬图片:{len(l_i)}')
+            f'\r分类队列:{str(len(l_zt))},分类:{str(len(l_zt_o))},壁纸集:{len(l_d_o)},图片:{len(l_i)}')
         sys.stdout.flush()
         if len(l_i) != 0:
             try:
