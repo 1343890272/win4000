@@ -1,3 +1,4 @@
+import sys
 from threading import Thread
 import requests
 from bs4 import BeautifulSoup
@@ -7,7 +8,9 @@ url = 'http://www.win4000.com'
 req = requests.Session()
 l_zt = []
 l_zt_o = []
-l_l = []
+l_d = []
+l_d_o = []
+l_i = []
 
 
 def s():
@@ -75,12 +78,15 @@ def detail(args):
         img_url = img['src']
         k = {'title': title_zt, 'href': href_zt, 'next': {'title': title_detail, 'href': href_detail,
                                                           'next': {'title': img_title, 'href': img_url}}}
-        if k not in l_l:
-            l_l.append(k)
-        if len(l_l) != 0:
+        if k not in l_i:
+            l_i.append(img_url)
+        sys.stdout.write(
+            f'\r当前分类队列:{str(len(l_zt))},正在爬取的分类:{str(len(l_zt_o))},正在爬取的壁纸集:{len(l_d)},已爬图片:{len(l_i)}')
+        sys.stdout.flush()
+        if len(l_i) != 0:
             try:
                 f = open('1.json', 'w', encoding='utf-8')
-                f.write(str(l_l).replace("'", '"'))
+                f.write(str(l_i).replace("'", '"'))
             finally:
                 f.close()
         # print(title_zt + '>' + title_detail + '>' + img_title + '>' + img_url)
@@ -111,18 +117,22 @@ def zt(args):
         for i in soup.find_all('a', href=re.compile('http://www.win4000.com/wallpaper_detail_(.*?).html')):
             title_detail = i['title']
             href_detail = i['href']
+            k = {'title': title_detail, 'href': href_detail}
+            l_d.append(k)
             Thread(target=detail,
                    args=([{'href': href_zt, 'title': title_zt}, {'href': href_detail, 'title': title_detail}],)).start()
+            l_d_o.append(k)
+            l_d.remove(k)
 
 
 if __name__ == '__main__':
     # 第一层
     s()
     # 第二层
+    t = {}
     while True:
         if len(l_zt) != 0:
             for i in l_zt:
                 Thread(target=zt, args=(i,)).start()
                 l_zt_o.append(i)
                 l_zt.remove(i)
-                print('当前:' + str(len(l_zt)), '已爬:' + str(len(l_zt_o)))
